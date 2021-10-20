@@ -1,0 +1,19 @@
+Function UPC(ByVal UPCnumber As String) As String
+
+' Calculating the UPC version A checkdigit in Excel
+' Your input, UPCnumber, is a string consisting of an 11-, 12-, or 14-digit number.
+  
+    Dim checkDigitSubtotal As Integer  ' a check digit throwaway
+
+  ' Possible valid input includes 11-digits (no check digit), 12-digits (with check digit), or 14-digits (GTIN).
+    
+  ' Now we need to do the UPC A check digit calculation.
+  ' Add up the numbers in the odd positions left to right. Multiple the result by 3.
+  ' Add up the numbers in the even positions. Now add the first subtotal to the second.
+  ' The UPC barcode check digit is the single digit number makes the total a multiple of 10.
+checkDigitSubtotal = (Val(Left(UPCnumber, 1))) + (Val(Mid(UPCnumber, 3, 1))) + (Val(Mid(UPCnumber, 5, 1))) + (Val(Mid(UPCnumber, 7, 1))) + (Val(Mid(UPCnumber, 9, 1))) + (Val(Mid(UPCnumber, 11, 1))) + (Val(Mid(UPCnumber, 13, 1)))
+checkDigitSubtotal = (3 * checkDigitSubtotal) + (Val(Mid(UPCnumber, 2, 1))) + (Val(Mid(UPCnumber, 4, 1))) + (Val(Mid(UPCnumber, 6, 1))) + (Val(Mid(UPCnumber, 8, 1))) + (Val(Mid(UPCnumber, 10, 1))) + (Val(Mid(UPCnumber, 12, 1)))
+
+  UPC = UPCnumber+Right(Str(300 - checkDigitSubtotal), 1)
+  
+End Function
